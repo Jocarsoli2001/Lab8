@@ -55,15 +55,32 @@ int  tabla(int a);
 
 //----------------------Interrupciones--------------------------------
 void __interrupt() isr(void){
-    if(T0IF){
-        
+    if(PIR1bits.ADIF){
+        if(ADCON0bits.CHS == 1){
+            PORTC = ADRESH;
         }
+        else{
+            PORTD = ADRESH;
+        }
+        PIR1bits.ADIF = 0;
+    }
 }
 
 //----------------------Main Loop--------------------------------
 void main(void) {
     setup();                        // Subrutina de setup
+    ADCON0bits.GO = 1;
     while(1){
+        if(ADCON0bits.GO == 0){
+            if(ADCON0bits.CHS == 1){
+                ADCON0bits.CHS = 0;
+            }
+            else{
+                ADCON0bits.CHS = 1;
+            }
+            __delay_(50);
+            ADCON0bits.GO = 1;
+        }
       
     }
 }
@@ -72,28 +89,36 @@ void main(void) {
 void setup(void){
     
     //Configuración de entradas y salidas
-    ANSEL = 0b00000011;                      // Pines 2 y 3 como analógicos
+    ANSEL = 0b00000011;                     // Pines 2 y 3 como analógicos
     ANSELH = 0;
     
-    TRISA = 0;                              // PORTA como salida
+    TRISA = 0b00000011;                     // PORTA como salida
     TRISC = 0;                              // PORTC como salida
-    TRISB = 0b00000011;                     // PORTB, pin 0 Y 1 como entrada
     TRISD = 0;
     
     PORTA = 0;
     PORTD = 0;
-    PORTB = 0;
     PORTC = 0;
     
     //Configuración de oscilador
     OSCCONbits.IRCF = 0b0110;       // Oscilador a 4 MHz = 110
     OSCCONbits.SCS = 1;
     
+    //Configuración del ADC
+    ADCON1bits.ADFM = 0;
+    ADCON1bits.VCFG0 = 0;
+    ADCON1bits.VCFG1 = 0;
+    
+    ADCON0bits.ADCS = 0b01;
+    ADCON0bits.CHS = 0;
+    ADCON0bits.ADON = 1;
+    __delay_us(50);
     
     //Configuración de interrupciones
-    INTCONbits.T0IF = 0;            // Habilitada la bandera de TIMER 0      
-    INTCONbits.T0IE = 1;            // Habilitar las interrupciones de TIMER 0
     INTCONbits.GIE = 1;             // Habilitar interrupciones globales
+    PIR1bits.ADIF = 0;
+    PIE1bits.ADIE = 1;
+    INTCONbits.PEIE = 1;
     
     return;
 }
