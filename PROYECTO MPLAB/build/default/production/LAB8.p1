@@ -35,15 +35,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "1276
 [; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1276: extern volatile ADCON0bits_t ADCON0bits __attribute__((address(0x01F)));
 [v _ADCON0bits `VS44 ~T0 @X0 0 e@31 ]
-"290
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 290: extern volatile unsigned char PORTC __attribute__((address(0x007)));
-[v _PORTC `Vuc ~T0 @X0 0 e@7 ]
-"1238
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1238: extern volatile unsigned char ADRESH __attribute__((address(0x01E)));
-[v _ADRESH `Vuc ~T0 @X0 0 e@30 ]
 "352
 [; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 352: extern volatile unsigned char PORTD __attribute__((address(0x008)));
 [v _PORTD `Vuc ~T0 @X0 0 e@8 ]
+"1238
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1238: extern volatile unsigned char ADRESH __attribute__((address(0x01E)));
+[v _ADRESH `Vuc ~T0 @X0 0 e@30 ]
+"290
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 290: extern volatile unsigned char PORTC __attribute__((address(0x007)));
+[v _PORTC `Vuc ~T0 @X0 0 e@7 ]
 [p mainexit ]
 "45 LAB8.c
 [; ;LAB8.c: 45: void setup(void);
@@ -396,8 +396,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! == -> . . _ADCON0bits 0 2 `i -> 1 `i 141  ]
 {
 "55
-[; ;LAB8.c: 55:             PORTC = ADRESH;
-[e = _PORTC _ADRESH ]
+[; ;LAB8.c: 55:             PORTD = ADRESH;
+[e = _PORTD _ADRESH ]
 "56
 [; ;LAB8.c: 56:         }
 }
@@ -407,8 +407,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 141 ]
 {
 "58
-[; ;LAB8.c: 58:             PORTD = ADRESH;
-[e = _PORTD _ADRESH ]
+[; ;LAB8.c: 58:             PORTC = ADRESH;
+[e = _PORTC _ADRESH ]
 "59
 [; ;LAB8.c: 59:         }
 }

@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.32 build 20210201212658 
-                                                                                               Mon Oct 04 18:50:40 2021
+                                                                                               Mon Oct 04 18:54:22 2021
 
 Microchip MPLAB XC8 C Compiler v2.32 (Free license) build 20210201212658 Og1 
      1                           	processor	16F887
@@ -216,9 +216,9 @@ Microchip MPLAB XC8 C Compiler v2.32 (Free license) build 20210201212658 Og1
    202  018D                     	;# 
    203  000B                     _INTCONbits	set	11
    204  0005                     _PORTA	set	5
-   205  0008                     _PORTD	set	8
+   205  0007                     _PORTC	set	7
    206  001E                     _ADRESH	set	30
-   207  0007                     _PORTC	set	7
+   207  0008                     _PORTD	set	8
    208  001F                     _ADCON0bits	set	31
    209  000C                     _PIR1bits	set	12
    210  008C                     _PIE1bits	set	140
@@ -583,17 +583,17 @@ Microchip MPLAB XC8 C Compiler v2.32 (Free license) build 20210201212658 Og1
    569  007B                     u2_20:
    570  007B                     i1l686:
    571                           
-   572                           ;LAB8.c: 55:             PORTC = ADRESH;
+   572                           ;LAB8.c: 55:             PORTD = ADRESH;
    573  007B  081E               	movf	30,w	;volatile
-   574  007C  0087               	movwf	7	;volatile
+   574  007C  0088               	movwf	8	;volatile
    575                           
    576                           ;LAB8.c: 56:         }
    577  007D  2880               	goto	i1l690
    578  007E                     i1l688:
    579                           
-   580                           ;LAB8.c: 58:             PORTD = ADRESH;
+   580                           ;LAB8.c: 58:             PORTC = ADRESH;
    581  007E  081E               	movf	30,w	;volatile
-   582  007F  0088               	movwf	8	;volatile
+   582  007F  0087               	movwf	7	;volatile
    583  0080                     i1l690:
    584                           
    585                           ;LAB8.c: 60:         PIR1bits.ADIF = 0;
@@ -779,7 +779,7 @@ DATA                 0      0       0      12        0.0%
 
 
 Microchip Technology PIC Macro Assembler V2.32 build 20210201212658 
-Symbol Table                                                                                   Mon Oct 04 18:50:40 2021
+Symbol Table                                                                                   Mon Oct 04 18:54:22 2021
 
                      l56 0043                       u30 0050                       u31 004F  
                      u40 0059                       u41 0058                       u57 0062  

@@ -2755,10 +2755,10 @@ void setup(void);
 void __attribute__((picinterrupt(("")))) isr(void){
     if(PIR1bits.ADIF){
         if(ADCON0bits.CHS == 1){
-            PORTC = ADRESH;
+            PORTD = ADRESH;
         }
         else{
-            PORTD = ADRESH;
+            PORTC = ADRESH;
         }
         PIR1bits.ADIF = 0;
     }
