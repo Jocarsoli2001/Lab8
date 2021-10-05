@@ -37,13 +37,24 @@
 #define _XTAL_FREQ 4000000
 
 //-----------------------Constantes----------------------------------
-
+#define  valor_tmr0 237              // valor_tmr0 = 61
+#define  prueba 123
 
 //-----------------------Variables------------------------------------
+int cont2 = 0;
+int cont_vol = 0;
+int digi = 0;
+int uni = 0;
+int dece = 0;
+int cen = 0;
+uint8_t  disp_selector = 0b001;
+int dig[3];
 
 //------------Funciones sin retorno de variables----------------------
 void setup(void);                   // Función de setup
-
+void divisor(void);
+void tmr0(void);                    // Función para reiniciar TMR0
+void displays(void);
 
 //-------------Funciones que retornan variables-----------------------
 int  tabla(int a);
@@ -52,12 +63,18 @@ int  tabla(int a);
 void __interrupt() isr(void){
     if(PIR1bits.ADIF){
         if(ADCON0bits.CHS == 1){
-            PORTD = ADRESH;
+            cont2 = ADRESH;
+            cont_vol = cont2*2;
         }
         else{
             PORTC = ADRESH;
         }
         PIR1bits.ADIF = 0;
+        divisor();
+    }
+    if(T0IF){
+        tmr0();
+        displays();
     }
 }
 
@@ -75,8 +92,7 @@ void main(void) {
             }
             __delay_us(50);
             ADCON0bits.GO = 1;
-        }
-      
+        } 
     }
 }
 
@@ -90,14 +106,25 @@ void setup(void){
     TRISA = 0b00000011;                     // PORTA como salida
     TRISC = 0;                              // PORTC como salida
     TRISD = 0;
+    TRISE = 0;
     
     PORTA = 0;
     PORTD = 0;
     PORTC = 0;
+    PORTE = 0;
     
     //Configuración de oscilador
     OSCCONbits.IRCF = 0b0110;       // Oscilador a 4 MHz = 110
     OSCCONbits.SCS = 1;
+    
+    //Configuración de TMR0
+    OPTION_REGbits.T0CS = 0;        // bit 5  TMR0 Clock Source Select bit...0 = Internal Clock (CLKO) 1 = Transition on T0CKI pin
+    OPTION_REGbits.T0SE = 0;        // bit 4 TMR0 Source Edge Select bit 0 = low/high 1 = high/low
+    OPTION_REGbits.PSA = 0;         // bit 3  Prescaler Assignment bit...0 = Prescaler is assigned to the Timer0
+    OPTION_REGbits.PS2 = 1;         // bits 2-0  PS2:PS0: Prescaler Rate Select bits
+    OPTION_REGbits.PS1 = 1;
+    OPTION_REGbits.PS0 = 1;
+    TMR0 = valor_tmr0;              // preset for timer register
     
     //Configuración del ADC
     ADCON1bits.ADFM = 0;
@@ -110,6 +137,8 @@ void setup(void){
     __delay_us(50);
     
     //Configuración de interrupciones
+    INTCONbits.T0IF = 0;            // Habilitada la bandera de TIMER 0      
+    INTCONbits.T0IE = 1;            // Habilitar las interrupciones de TIMER 0
     INTCONbits.GIE = 1;             // Habilitar interrupciones globales
     PIR1bits.ADIF = 0;
     PIE1bits.ADIE = 1;
@@ -118,6 +147,39 @@ void setup(void){
     return;
 }
 
+void tmr0(void){
+    INTCONbits.T0IF = 0;            // Limpiar bandera de TIMER 0
+    TMR0 = valor_tmr0;              // TMR0 = 61
+    return;
+}
+
+void divisor(void){
+    PORTD = cont_vol;
+    for(int i = 2; i >= 4; i--){
+        dig[ i ] = cont_vol % 10;
+        cont_vol /= 10;
+    }
+    dig[0] = uni;
+    dig[1] = dece;
+    dig[2] = cen;
+}
+
+void displays(void){
+    PORTE = disp_selector;
+    if(disp_selector == 0b001){
+        PORTD = tabla(uni);
+        disp_selector = 0b010;
+    }
+    else if(disp_selector == 0b010){
+        PORTD = tabla(dece);
+        disp_selector = 0b100;
+    }
+    else if(disp_selector == 0b100){
+        PORTD = tabla(cen);
+        disp_selector = 0b001;
+    }
+}
+ 
 int tabla(int a){
     switch (a){
         case 0:

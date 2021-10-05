@@ -3,6 +3,10 @@
 [d edition pro ]
 [d chip 16F887 ]
 [d frameptr 0 ]
+"5 C:\Program Files\Microchip\xc8\v2.32\pic\sources\c90\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+"5 C:\Program Files\Microchip\xc8\v2.32\pic\sources\c90\common\awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
 "10 C:\Program Files\Microchip\xc8\v2.32\pic\sources\c90\common\sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
 "4 C:\Program Files\Microchip\xc8\v2.32\pic\sources\c90\common\Umul8_16.c
@@ -11,19 +15,31 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"52 D:\Archivos\Documentos\Universidad y colegio\UVG\2021\Segundo Semestre\Programación de Microcontroladores\Laboratorios\Lab 8\Lab8\PROYECTO MPLAB\LAB8.c
+"63 D:\Archivos\Documentos\Universidad y colegio\UVG\2021\Segundo Semestre\Programación de Microcontroladores\Laboratorios\Lab 8\Lab8\PROYECTO MPLAB\LAB8.c
 [v _isr isr `II(v  1 e 1 0 ]
-"65
+"82
 [v _main main `(v  1 e 1 0 ]
-"84
+"100
 [v _setup setup `(v  1 e 1 0 ]
-"166 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
+"150
+[v _tmr0 tmr0 `(v  1 e 1 0 ]
+"156
+[v _divisor divisor `(v  1 e 1 0 ]
+"167
+[v _displays displays `(v  1 e 1 0 ]
+"183
+[v _tabla tabla `(i  1 e 2 0 ]
+"59 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
+[v _TMR0 TMR0 `VEuc  1 e 1 @1 ]
+"166
 [v _PORTA PORTA `VEuc  1 e 1 @5 ]
 "290
 [v _PORTC PORTC `VEuc  1 e 1 @7 ]
 "352
 [v _PORTD PORTD `VEuc  1 e 1 @8 ]
-[s S147 . 1 `uc 1 RBIF 1 0 :1:0 
+"414
+[v _PORTE PORTE `VEuc  1 e 1 @9 ]
+[s S189 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INTF 1 0 :1:1 
 `uc 1 T0IF 1 0 :1:2 
 `uc 1 RBIE 1 0 :1:3 
@@ -33,13 +49,13 @@
 `uc 1 GIE 1 0 :1:7 
 ]
 "482
-[s S156 . 1 `uc 1 . 1 0 :2:0 
+[s S198 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 TMR0IF 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 TMR0IE 1 0 :1:5 
 ]
-[u S161 . 1 `S147 1 . 1 0 `S156 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES161  1 e 1 @11 ]
+[u S203 . 1 `S189 1 . 1 0 `S198 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES203  1 e 1 @11 ]
 [s S22 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 CCP1IF 1 0 :1:2 
@@ -76,13 +92,29 @@
 ]
 [u S61 . 1 `S41 1 . 1 0 `S46 1 . 1 0 `S55 1 . 1 0 `S58 1 . 1 0 ]
 [v _ADCON0bits ADCON0bits `VES61  1 e 1 @31 ]
+[s S147 . 1 `uc 1 PS 1 0 :3:0 
+`uc 1 PSA 1 0 :1:3 
+`uc 1 T0SE 1 0 :1:4 
+`uc 1 T0CS 1 0 :1:5 
+`uc 1 INTEDG 1 0 :1:6 
+`uc 1 nRBPU 1 0 :1:7 
+]
+"1366
+[s S154 . 1 `uc 1 PS0 1 0 :1:0 
+`uc 1 PS1 1 0 :1:1 
+`uc 1 PS2 1 0 :1:2 
+]
+[u S158 . 1 `S147 1 . 1 0 `S154 1 . 1 0 ]
+[v _OPTION_REGbits OPTION_REGbits `VES158  1 e 1 @129 ]
 "1416
 [v _TRISA TRISA `VEuc  1 e 1 @133 ]
 "1540
 [v _TRISC TRISC `VEuc  1 e 1 @135 ]
 "1602
 [v _TRISD TRISD `VEuc  1 e 1 @136 ]
-[s S179 . 1 `uc 1 TMR1IE 1 0 :1:0 
+"1664
+[v _TRISE TRISE `VEuc  1 e 1 @137 ]
+[s S221 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 CCP1IE 1 0 :1:2 
 `uc 1 SSPIE 1 0 :1:3 
@@ -91,47 +123,108 @@
 `uc 1 ADIE 1 0 :1:6 
 ]
 "1718
-[u S187 . 1 `S179 1 . 1 0 ]
-[v _PIE1bits PIE1bits `VES187  1 e 1 @140 ]
-[s S106 . 1 `uc 1 SCS 1 0 :1:0 
+[u S229 . 1 `S221 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES229  1 e 1 @140 ]
+[s S121 . 1 `uc 1 SCS 1 0 :1:0 
 `uc 1 LTS 1 0 :1:1 
 `uc 1 HTS 1 0 :1:2 
 `uc 1 OSTS 1 0 :1:3 
 `uc 1 IRCF 1 0 :3:4 
 ]
 "1882
-[s S112 . 1 `uc 1 . 1 0 :4:0 
+[s S127 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 IRCF0 1 0 :1:4 
 `uc 1 IRCF1 1 0 :1:5 
 `uc 1 IRCF2 1 0 :1:6 
 ]
-[u S117 . 1 `S106 1 . 1 0 `S112 1 . 1 0 ]
-[v _OSCCONbits OSCCONbits `VES117  1 e 1 @143 ]
-[s S132 . 1 `uc 1 . 1 0 :4:0 
+[u S132 . 1 `S121 1 . 1 0 `S127 1 . 1 0 ]
+[v _OSCCONbits OSCCONbits `VES132  1 e 1 @143 ]
+[s S174 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 VCFG0 1 0 :1:4 
 `uc 1 VCFG1 1 0 :1:5 
 `uc 1 . 1 0 :1:6 
 `uc 1 ADFM 1 0 :1:7 
 ]
 "2991
-[u S138 . 1 `S132 1 . 1 0 ]
-[v _ADCON1bits ADCON1bits `VES138  1 e 1 @159 ]
+[u S180 . 1 `S174 1 . 1 0 ]
+[v _ADCON1bits ADCON1bits `VES180  1 e 1 @159 ]
 "3387
 [v _ANSEL ANSEL `VEuc  1 e 1 @392 ]
 "3449
 [v _ANSELH ANSELH `VEuc  1 e 1 @393 ]
-"65 D:\Archivos\Documentos\Universidad y colegio\UVG\2021\Segundo Semestre\Programación de Microcontroladores\Laboratorios\Lab 8\Lab8\PROYECTO MPLAB\LAB8.c
+"4322
+[v _T0IF T0IF `VEb  1 e 0 @90 ]
+"44 D:\Archivos\Documentos\Universidad y colegio\UVG\2021\Segundo Semestre\Programación de Microcontroladores\Laboratorios\Lab 8\Lab8\PROYECTO MPLAB\LAB8.c
+[v _cont2 cont2 `i  1 e 2 0 ]
+"45
+[v _cont_vol cont_vol `i  1 e 2 0 ]
+"47
+[v _uni uni `i  1 e 2 0 ]
+"48
+[v _dece dece `i  1 e 2 0 ]
+"49
+[v _cen cen `i  1 e 2 0 ]
+"50
+[v _disp_selector disp_selector `uc  1 e 1 0 ]
+"51
+[v _dig dig `[3]i  1 e 6 0 ]
+"82
 [v _main main `(v  1 e 1 0 ]
 {
-"81
+"97
 } 0
-"84
+"100
 [v _setup setup `(v  1 e 1 0 ]
 {
-"119
+"148
 } 0
-"52
+"63
 [v _isr isr `II(v  1 e 1 0 ]
 {
-"62
+"79
+} 0
+"150
+[v _tmr0 tmr0 `(v  1 e 1 0 ]
+{
+"154
+} 0
+"156
+[v _divisor divisor `(v  1 e 1 0 ]
+{
+"165
+} 0
+"5 C:\Program Files\Microchip\xc8\v2.32\pic\sources\c90\common\awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+{
+"10
+[v ___awmod@sign sign `uc  1 a 1 6 ]
+[v ___awmod@counter counter `uc  1 a 1 5 ]
+"5
+[v ___awmod@divisor divisor `i  1 p 2 0 ]
+[v ___awmod@dividend dividend `i  1 p 2 2 ]
+"34
+} 0
+"5 C:\Program Files\Microchip\xc8\v2.32\pic\sources\c90\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+{
+"10
+[v ___awdiv@quotient quotient `i  1 a 2 7 ]
+"11
+[v ___awdiv@sign sign `uc  1 a 1 6 ]
+[v ___awdiv@counter counter `uc  1 a 1 5 ]
+"5
+[v ___awdiv@divisor divisor `i  1 p 2 0 ]
+[v ___awdiv@dividend dividend `i  1 p 2 2 ]
+"41
+} 0
+"167 D:\Archivos\Documentos\Universidad y colegio\UVG\2021\Segundo Semestre\Programación de Microcontroladores\Laboratorios\Lab 8\Lab8\PROYECTO MPLAB\LAB8.c
+[v _displays displays `(v  1 e 1 0 ]
+{
+"181
+} 0
+"183
+[v _tabla tabla `(i  1 e 2 0 ]
+{
+[v tabla@a a `i  1 p 2 0 ]
+"221
 } 0

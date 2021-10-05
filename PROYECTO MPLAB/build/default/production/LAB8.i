@@ -2744,23 +2744,41 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 # 34 "LAB8.c" 2
-# 45 "LAB8.c"
+# 44 "LAB8.c"
+int cont2 = 0;
+int cont_vol = 0;
+int digi = 0;
+int uni = 0;
+int dece = 0;
+int cen = 0;
+uint8_t disp_selector = 0b001;
+int dig[3];
+
+
 void setup(void);
+void divisor(void);
+void tmr0(void);
+void displays(void);
 
 
-
-
+int tabla(int a);
 
 
 void __attribute__((picinterrupt(("")))) isr(void){
     if(PIR1bits.ADIF){
         if(ADCON0bits.CHS == 1){
-            PORTD = ADRESH;
+            cont2 = ADRESH;
+            cont_vol = cont2*2;
         }
         else{
             PORTC = ADRESH;
         }
         PIR1bits.ADIF = 0;
+        divisor();
+    }
+    if(T0IF){
+        tmr0();
+        displays();
     }
 }
 
@@ -2779,7 +2797,6 @@ void main(void) {
             _delay((unsigned long)((50)*(4000000/4000000.0)));
             ADCON0bits.GO = 1;
         }
-
     }
 }
 
@@ -2793,14 +2810,25 @@ void setup(void){
     TRISA = 0b00000011;
     TRISC = 0;
     TRISD = 0;
+    TRISE = 0;
 
     PORTA = 0;
     PORTD = 0;
     PORTC = 0;
+    PORTE = 0;
 
 
     OSCCONbits.IRCF = 0b0110;
     OSCCONbits.SCS = 1;
+
+
+    OPTION_REGbits.T0CS = 0;
+    OPTION_REGbits.T0SE = 0;
+    OPTION_REGbits.PSA = 0;
+    OPTION_REGbits.PS2 = 1;
+    OPTION_REGbits.PS1 = 1;
+    OPTION_REGbits.PS0 = 1;
+    TMR0 = 237;
 
 
     ADCON1bits.ADFM = 0;
@@ -2813,10 +2841,85 @@ void setup(void){
     _delay((unsigned long)((50)*(4000000/4000000.0)));
 
 
+    INTCONbits.T0IF = 0;
+    INTCONbits.T0IE = 1;
     INTCONbits.GIE = 1;
     PIR1bits.ADIF = 0;
     PIE1bits.ADIE = 1;
     INTCONbits.PEIE = 1;
 
     return;
+}
+
+void tmr0(void){
+    INTCONbits.T0IF = 0;
+    TMR0 = 237;
+    return;
+}
+
+void divisor(void){
+    PORTD = cont_vol;
+    for(int i = 2; i >= 4; i--){
+        dig[ i ] = cont_vol % 10;
+        cont_vol /= 10;
+    }
+    dig[0] = uni;
+    dig[1] = dece;
+    dig[2] = cen;
+}
+
+void displays(void){
+    PORTE = disp_selector;
+    if(disp_selector == 0b001){
+        PORTD = tabla(uni);
+        disp_selector = 0b010;
+    }
+    else if(disp_selector == 0b010){
+        PORTD = tabla(dece);
+        disp_selector = 0b100;
+    }
+    else if(disp_selector == 0b100){
+        PORTD = tabla(cen);
+        disp_selector = 0b001;
+    }
+}
+
+int tabla(int a){
+    switch (a){
+        case 0:
+            return 0b00111111;
+            break;
+        case 1:
+            return 0b00000110;
+            break;
+        case 2:
+            return 0b01011011;
+            break;
+        case 3:
+            return 0b01001111;
+            break;
+        case 4:
+            return 0b01100110;
+            break;
+        case 5:
+            return 0b01101101;
+            break;
+        case 6:
+            return 0b01111101;
+            break;
+        case 7:
+            return 0b00000111;
+            break;
+        case 8:
+            return 0b01111111;
+            break;
+        case 9:
+            return 0b01101111;
+            break;
+        case 10:
+            return 0b01111011;
+        default:
+            break;
+
+    }
 }
