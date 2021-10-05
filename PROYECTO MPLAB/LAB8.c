@@ -27,30 +27,25 @@
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
 
+
+//-----------------Librerías utilizadas en código-------------------- 
 #include <xc.h>
 #include <stdint.h>
 #include <stdio.h>
+
+//-----------------Definición de frecuencia de cristal---------------
+#define _XTAL_FREQ 4000000
 
 //-----------------------Constantes----------------------------------
 
 
 //-----------------------Variables------------------------------------
-uint8_t  cont1 = 0;
-uint8_t  cont = 0;                  // Cont = 0
-int  cont_portc = 0;            // Cont_portc = 0
-int  cont_decenas = 0;          // Cont_decenas = 0
-int  cont_centenas = 0;         // Cont_centenas = 0
-uint8_t  disp_selector = 0b001;
 
 //------------Funciones sin retorno de variables----------------------
 void setup(void);                   // Función de setup
-void tmr0(void);                    // Función para reiniciar TMR0
-void tabla_unidades(void);          // Tabla para traducir unidades a displays de 7 segmentos
-void limites(void);                 // Limites del aumento de contadores
-void displays(void);
+
 
 //-------------Funciones que retornan variables-----------------------
-int  tabla(int a);
 
 
 //----------------------Interrupciones--------------------------------
@@ -78,7 +73,7 @@ void main(void) {
             else{
                 ADCON0bits.CHS = 1;
             }
-            __delay_(50);
+            __delay_us(50);
             ADCON0bits.GO = 1;
         }
       
@@ -121,45 +116,4 @@ void setup(void){
     INTCONbits.PEIE = 1;
     
     return;
-}
-
-
-int tabla(int a){
-    switch (a){
-        case 0:
-            return 0b00111111;
-            break;
-        case 1:
-            return 0b00000110;
-            break;
-        case 2:
-            return 0b01011011;
-            break;
-        case 3:
-            return 0b01001111;
-            break;
-        case 4:
-            return 0b01100110;
-            break;
-        case 5:
-            return 0b01101101;
-            break;
-        case 6:
-            return 0b01111101;
-            break;
-        case 7:
-            return 0b00000111;
-            break;
-        case 8:
-            return 0b01111111;
-            break;
-        case 9:
-            return 0b01101111;
-            break;
-        case 10:
-            return 0b01111011;
-        default:
-            break;
-            
-    }
 }
