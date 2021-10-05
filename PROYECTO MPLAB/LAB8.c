@@ -46,7 +46,7 @@ void setup(void);                   // Función de setup
 
 
 //-------------Funciones que retornan variables-----------------------
-
+int  tabla(int a);
 
 //----------------------Interrupciones--------------------------------
 void __interrupt() isr(void){
@@ -116,4 +116,44 @@ void setup(void){
     INTCONbits.PEIE = 1;
     
     return;
+}
+
+int tabla(int a){
+    switch (a){
+        case 0:
+            return 0b00111111;
+            break;
+        case 1:
+            return 0b00000110;
+            break;
+        case 2:
+            return 0b01011011;
+            break;
+        case 3:
+            return 0b01001111;
+            break;
+        case 4:
+            return 0b01100110;
+            break;
+        case 5:
+            return 0b01101101;
+            break;
+        case 6:
+            return 0b01111101;
+            break;
+        case 7:
+            return 0b00000111;
+            break;
+        case 8:
+            return 0b01111111;
+            break;
+        case 9:
+            return 0b01101111;
+            break;
+        case 10:
+            return 0b01111011;
+        default:
+            break;
+            
+    }
 }
