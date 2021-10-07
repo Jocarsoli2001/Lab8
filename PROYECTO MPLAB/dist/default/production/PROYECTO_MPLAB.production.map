@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files\Microchip\xc8\v2.32\pic\dat\en_msgs.txt -cn \
   -h+dist/default/production\PROYECTO_MPLAB.production.sym \
   --cmf=dist/default/production\PROYECTO_MPLAB.production.cmf -z -Q16F887 \
-  -oC:\Users\jocar\AppData\Local\Temp\xcAs750.4 --defsym=__MPLAB_BUILD=1 \
+  -oC:\Users\jocar\AppData\Local\Temp\xcAs5co.4 --defsym=__MPLAB_BUILD=1 \
   -Mdist/default/production/PROYECTO_MPLAB.production.map -E1 \
   -ver=XC8 Compiler --acfsm=1493 -ASTACK=0110h-016Fh -pstack=STACK \
   -ACODE=00h-07FFhx4 -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 \
@@ -18,7 +18,7 @@ Linker command line:
   -AEEDATA=00h-0FFh/02100h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 \
   -preset_vec=00h,intentry=04h,init,end_init -ppowerup=CODE -pcinit=CODE \
-  -pfunctab=ENTRY -k C:\Users\jocar\AppData\Local\Temp\xcAs750.o \
+  -pfunctab=ENTRY -k C:\Users\jocar\AppData\Local\Temp\xcAs5co.o \
   dist/default/production\PROYECTO_MPLAB.production.o 
 
 Object code version is 3.11
@@ -28,7 +28,7 @@ Machine type is 16F887
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\jocar\AppData\Local\Temp\xcAs750.o
+C:\Users\jocar\AppData\Local\Temp\xcAs5co.o
                 end_init                             12       12        3        8       0
                 reset_vec                             0        0        3        0       0
                 config                             2007     2007        2        0       4
@@ -36,21 +36,21 @@ dist/default/production\PROYECTO_MPLAB.production.o
                 cinit                                15       15       15        8       0
                 intentry                              4        4        E        8       0
                 config                             2007     2007        2        0       4
-                text9                                F2       F2       61        8       0
-                text8                                91       91       61        8       0
-                text7                               1FF      1FF       49        8       0
+                text9                               143      143       59        8       0
+                text8                                EA       EA       59        8       0
+                text7                               1EF      1EF       49        8       0
                 text6                                2A       2A       67        8       0
-                text5                               153      153       59        8       0
-                text4                               1AC      1AC       53        8       0
-                text3                               2FA      2FA        6        8       0
-                text2                               28B      28B       3D        8       0
-                text1                               248      248       43        8       0
-                maintext                            2C8      2C8       32        8       0
+                text5                                91       91       59        8       0
+                text4                               19C      19C       53        8       0
+                text3                               2EA      2EA        6        8       0
+                text2                               27B      27B       3D        8       0
+                text1                               238      238       43        8       0
+                maintext                            2B8      2B8       32        8       0
                 cstackBANK0                          2B       2B        8       20       1
                 cstackCOMMON                         70       70        E       70       1
                 dataBANK0                            33       33        1       20       1
                 bssBANK0                             20       20        B       20       1
-                idataBANK0                          300      300        1        8       0
+                idataBANK0                          2F0      2F0        1        8       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   STACK          
@@ -60,17 +60,17 @@ TOTAL           Name                               Link     Load   Length     Sp
                 cinit                                15       15       15         0
                 intentry                              4        4        E         0
                 reset_vec                             0        0        3         0
-                text9                                F2       F2       61         0
-                text8                                91       91       61         0
-                text7                               1FF      1FF       49         0
+                text9                               143      143       59         0
+                text8                                EA       EA       59         0
+                text7                               1EF      1EF       49         0
                 text6                                2A       2A       67         0
-                text5                               153      153       59         0
-                text4                               1AC      1AC       53         0
-                text3                               2FA      2FA        6         0
-                text2                               28B      28B       3D         0
-                text1                               248      248       43         0
-                maintext                            2C8      2C8       32         0
-                idataBANK0                          300      300        1         0
+                text5                                91       91       59         0
+                text4                               19C      19C       53         0
+                text3                               2EA      2EA        6         0
+                text2                               27B      27B       3D         0
+                text1                               238      238       43         0
+                maintext                            2B8      2B8       32         0
+                idataBANK0                          2F0      2F0        1         0
 
         CLASS   STRCODE        
 
@@ -119,7 +119,7 @@ TOTAL           Name                               Link     Load   Length     Sp
 SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
 
                 reset_vec                      000000  000003  000003         0       0  CODE        2
-                intentry                       000004  0002FD  000301         8       0  CODE        2
+                intentry                       000004  0002ED  0002F1         8       0  CODE        2
                 bssBANK0                       000020  000014  000034        20       1  BANK0       1
                 cstackCOMMON                   000070  00000E  00007E        70       1  COMMON      1
 
@@ -132,12 +132,12 @@ UNUSED ADDRESS RANGES
         BANK2            0110-016F             60           1
         BANK3            0190-01EF             60           1
         CODE             0003-0003              1           2
-                         0301-1FFF            800
+                         02F1-1FFF            800
         CONST            0003-0003              1           2
-                         0301-1FFF            100
+                         02F1-1FFF            100
         EEDATA           2100-21FF            100           2
         ENTRY            0003-0003              1           2
-                         0301-1FFF            100
+                         02F1-1FFF            100
         IDLOC            2000-2003              4           2
         RAM              0034-006F             3C           1
                          00A0-00EF             50
@@ -149,9 +149,9 @@ UNUSED ADDRESS RANGES
         SFR3             0180-018F             10           1
         STACK            0110-016F             60           1
         STRCODE          0003-0003              1           2
-                         0301-1FFF           1CFF
+                         02F1-1FFF           1D0F
         STRING           0003-0003              1           2
-                         0301-1FFF            100
+                         02F1-1FFF            100
 
                                   Symbol Table
 
@@ -207,7 +207,7 @@ __Hsfr0                  sfr0         0000
 __Hsfr1                  sfr1         0000
 __Hsfr2                  sfr2         0000
 __Hsfr3                  sfr3         0000
-__Hspace_0               (abs)        0301
+__Hspace_0               (abs)        02F1
 __Hspace_1               (abs)        007E
 __Hspace_2               (abs)        0000
 __Hspace_3               (abs)        0000
@@ -251,7 +251,7 @@ __Lspace_4               (abs)        0000
 __Lstack                 stack        0000
 __Lstrings               strings      0000
 __Ltext                  text         0000
-__S0                     (abs)        0301
+__S0                     (abs)        02F1
 __S1                     (abs)        007E
 __S2                     (abs)        0000
 __S3                     (abs)        0000
@@ -261,7 +261,7 @@ ___awdiv@dividend        cstackCOMMON 0072
 ___awdiv@divisor         cstackCOMMON 0070
 ___awdiv@quotient        cstackCOMMON 0077
 ___awdiv@sign            cstackCOMMON 0076
-___awmod                 text5        0153
+___awmod                 text5        0091
 ___awmod@counter         cstackCOMMON 0075
 ___awmod@dividend        cstackCOMMON 0072
 ___awmod@divisor         cstackCOMMON 0070
@@ -272,33 +272,33 @@ ___sp                    stack        0000
 ___stackhi               (abs)        0000
 ___stacklo               (abs)        0000
 __end_of___awdiv         text6        0091
-__end_of___awmod         text5        01AC
+__end_of___awmod         text5        00EA
 __end_of__initialization cinit        0026
-__end_of_displays        text7        0248
-__end_of_divisor         text4        01FF
-__end_of_isr             text2        02C8
-__end_of_main            maintext     02FA
-__end_of_setup           text1        028B
-__end_of_tabla           text9        0153
-__end_of_tabla_p         text8        00F2
-__end_of_tmr0            text3        0300
+__end_of_displays        text7        0238
+__end_of_divisor         text4        01EF
+__end_of_isr             text2        02B8
+__end_of_main            maintext     02EA
+__end_of_setup           text1        027B
+__end_of_tabla           text9        019C
+__end_of_tabla_p         text8        0143
+__end_of_tmr0            text3        02F0
 __initialization         cinit        0015
 __pbssBANK0              bssBANK0     0020
 __pcstackBANK0           cstackBANK0  002B
 __pcstackCOMMON          cstackCOMMON 0070
 __pdataBANK0             dataBANK0    0033
-__pidataBANK0            idataBANK0   0300
+__pidataBANK0            idataBANK0   02F0
 __pintentry              intentry     0004
-__pmaintext              maintext     02C8
-__ptext1                 text1        0248
-__ptext2                 text2        028B
-__ptext3                 text3        02FA
-__ptext4                 text4        01AC
-__ptext5                 text5        0153
+__pmaintext              maintext     02B8
+__ptext1                 text1        0238
+__ptext2                 text2        027B
+__ptext3                 text3        02EA
+__ptext4                 text4        019C
+__ptext5                 text5        0091
 __ptext6                 text6        002A
-__ptext7                 text7        01FF
-__ptext8                 text8        0091
-__ptext9                 text9        00F2
+__ptext7                 text7        01EF
+__ptext8                 text8        00EA
+__ptext9                 text9        0143
 __size_of___awdiv        (abs)        0000
 __size_of___awmod        (abs)        0000
 __size_of_displays       (abs)        0000
@@ -312,14 +312,14 @@ __size_of_tmr0           (abs)        0000
 _cont_vol                bssBANK0     0026
 _dig                     bssBANK0     0020
 _disp_selector           dataBANK0    0033
-_displays                text7        01FF
-_divisor                 text4        01AC
-_isr                     text2        028B
-_main                    maintext     02C8
-_setup                   text1        0248
-_tabla                   text9        00F2
-_tabla_p                 text8        0091
-_tmr0                    text3        02FA
+_displays                text7        01EF
+_divisor                 text4        019C
+_isr                     text2        027B
+_main                    maintext     02B8
+_setup                   text1        0238
+_tabla                   text9        0143
+_tabla_p                 text8        00EA
+_tmr0                    text3        02EA
 btemp                    (abs)        007E
 divisor@i                cstackCOMMON 007C
 end_of_initialization    cinit        0026
@@ -343,19 +343,19 @@ MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
 LAB8.c
-		_displays      		CODE           	01FF	0000	73
-		_main          		CODE           	02C8	0000	50
-		_tabla_p       		CODE           	0091	0000	97
-		_isr           		CODE           	028B	0000	61
-		_tabla         		CODE           	00F2	0000	97
-		_tmr0          		CODE           	02FA	0000	6
-		_setup         		CODE           	0248	0000	67
-		_divisor       		CODE           	01AC	0000	83
+		_displays      		CODE           	01EF	0000	73
+		_main          		CODE           	02B8	0000	50
+		_tabla_p       		CODE           	00EA	0000	89
+		_isr           		CODE           	027B	0000	61
+		_tabla         		CODE           	0143	0000	89
+		_tmr0          		CODE           	02EA	0000	6
+		_setup         		CODE           	0238	0000	67
+		_divisor       		CODE           	019C	0000	83
 
-LAB8.c estimated size: 534
+LAB8.c estimated size: 518
 
 C:\Program Files\Microchip\xc8\v2.32\pic\sources\c90\common\awmod.c
-		___awmod       		CODE           	0153	0000	89
+		___awmod       		CODE           	0091	0000	89
 
 C:\Program Files\Microchip\xc8\v2.32\pic\sources\c90\common\awmod.c estimated size: 89
 

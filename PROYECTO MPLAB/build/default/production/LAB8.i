@@ -2911,8 +2911,6 @@ int tabla(int a){
         case 9:
             return 0b01101111;
             break;
-        case 10:
-            return 0b01111011;
         default:
             break;
 
@@ -2951,8 +2949,6 @@ int tabla_p(int a){
         case 9:
             return 0b11101111;
             break;
-        case 10:
-            return 0b11111011;
         default:
             break;
 

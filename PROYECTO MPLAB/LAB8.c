@@ -80,12 +80,12 @@ void main(void) {
     ADCON0bits.GO = 1;                      // Comenzar conversión ADC 
     while(1){
         if(ADCON0bits.GO == 0){             // Si bit GO = 0
-            if(ADCON0bits.CHS == 1){        // Si Channel Select = 1
-                ADCON0bits.CHS = 0;         // Asignar Channel Select como 0
+            if(ADCON0bits.CHS == 1){        // Si Input Channel = AN1
+                ADCON0bits.CHS = 0;         // Asignar input Channel = AN0
                 __delay_us(50);             // Delay de 50 ms
             }
-            else{                           // Si Channel Select = 0
-                ADCON0bits.CHS = 1;         // Asignar Channel Select como 1
+            else{                           // Si Input Channel = AN0
+                ADCON0bits.CHS = 1;         // Asignar Input Channel = AN1
                 __delay_us(50);
             }
             __delay_us(50);
@@ -98,116 +98,114 @@ void main(void) {
 void setup(void){
     
     //Configuración de entradas y salidas
-    ANSEL = 0b00000011;                     // Pines 2 y 3 como analógicos
+    ANSEL = 0b00000011;                     // Pines 2 y 3 de PORTA como analógicos
     ANSELH = 0;
     
-    TRISA = 0b00000011;                     // PORTA como salida
+    TRISA = 0b00000011;                     // PORTA, bit 0 y 1 como entrada analógica
     TRISC = 0;                              // PORTC como salida
-    TRISD = 0;
-    TRISE = 0;
+    TRISD = 0;                              // PORTD como salida                           
+    TRISE = 0;                              // PORTE como salida
     
-    PORTA = 0;
-    PORTD = 0;
-    PORTC = 0;
-    PORTE = 0;
+    PORTA = 0;                              // Limpiar PORTA
+    PORTD = 0;                              // Limpiar PORTD
+    PORTC = 0;                              // Limpiar PORTC
+    PORTE = 0;                              // Limpiar PORTE
     
     //Configuración de oscilador
-    OSCCONbits.IRCF = 0b0110;       // Oscilador a 4 MHz = 110
+    OSCCONbits.IRCF = 0b0110;               // Oscilador a 4 MHz = 110
     OSCCONbits.SCS = 1;
     
     //Configuración de TMR0
-    OPTION_REGbits.T0CS = 0;        // bit 5  TMR0 Clock Source Select bit...0 = Internal Clock (CLKO) 1 = Transition on T0CKI pin
-    OPTION_REGbits.T0SE = 0;        // bit 4 TMR0 Source Edge Select bit 0 = low/high 1 = high/low
-    OPTION_REGbits.PSA = 0;         // bit 3  Prescaler Assignment bit...0 = Prescaler is assigned to the Timer0
-    OPTION_REGbits.PS2 = 1;         // bits 2-0  PS2:PS0: Prescaler Rate Select bits
+    OPTION_REGbits.T0CS = 0;                // bit 5  TMR0 Clock Source Select bit...0 = Internal Clock (CLKO) 1 = Transition on T0CKI pin
+    OPTION_REGbits.T0SE = 0;                // bit 4 TMR0 Source Edge Select bit 0 = low/high 1 = high/low
+    OPTION_REGbits.PSA = 0;                 // bit 3  Prescaler Assignment bit...0 = Prescaler is assigned to the Timer0
+    OPTION_REGbits.PS2 = 1;                 // bits 2-0  PS2:PS0: Prescaler Rate Select bits
     OPTION_REGbits.PS1 = 1;
     OPTION_REGbits.PS0 = 1;
-    TMR0 = valor_tmr0;              // preset for timer register
+    TMR0 = valor_tmr0;                      // preset for timer register
     
     //Configuración del ADC
-    ADCON1bits.ADFM = 0;
-    ADCON1bits.VCFG0 = 0;
-    ADCON1bits.VCFG1 = 0;
+    ADCON1bits.ADFM = 0;                    // Resultado justificado a la izquierda
+    ADCON1bits.VCFG0 = 0;                   // Voltaje 0 de referencia = VSS
+    ADCON1bits.VCFG1 = 0;                   // Voltaje 1 de referencia = VDD
     
-    ADCON0bits.ADCS = 0b01;
-    ADCON0bits.CHS = 0;
-    ADCON0bits.ADON = 1;
+    ADCON0bits.ADCS = 0b01;                 // Conversión ADC generada a 2us
+    ADCON0bits.CHS = 0;                     // Input Channel = AN0
+    ADCON0bits.ADON = 1;                    // ADC = enabled
     __delay_us(50);
     
     //Configuración de interrupciones
-    INTCONbits.T0IF = 0;            // Habilitada la bandera de TIMER 0      
-    INTCONbits.T0IE = 1;            // Habilitar las interrupciones de TIMER 0
-    INTCONbits.GIE = 1;             // Habilitar interrupciones globales
-    PIR1bits.ADIF = 0;
-    PIE1bits.ADIE = 1;
-    INTCONbits.PEIE = 1;
+    INTCONbits.T0IF = 0;                    // Habilitada la bandera de TIMER 0      
+    INTCONbits.T0IE = 1;                    // Habilitar las interrupciones de TIMER 0
+    INTCONbits.GIE = 1;                     // Habilitar interrupciones globales
+    PIR1bits.ADIF = 0;                      // Limpiar bandera de interrupción del ADC
+    PIE1bits.ADIE = 1;                      // Interrupción ADC = enabled
+    INTCONbits.PEIE = 1;                    // Interrupciones periféricas activadas
     
     return;
 }
 
 void tmr0(void){
-    INTCONbits.T0IF = 0;            // Limpiar bandera de TIMER 0
-    TMR0 = valor_tmr0;              // TMR0 = 61
+    INTCONbits.T0IF = 0;                    // Limpiar bandera de TIMER 0
+    TMR0 = valor_tmr0;                      // TMR0 = 237
     return;
 }
 
 void divisor(void){
-    for(int i = 0; i<3 ; i++){
-        dig[i] = cont_vol % 10;
-        cont_vol = (cont_vol - dig[i])/10;
+    for(int i = 0; i<3 ; i++){              // De i = 0 hasta i = 2
+        dig[i] = cont_vol % 10;             // array[i] = cont_vol mod 10(retornar residuo). Devuelve digito por dígito de un número.
+        cont_vol = (cont_vol - dig[i])/10;  // cont_vol = valor sin último digito.
     }
 }
 
 void displays(void){
-    PORTE = disp_selector;
-    if(disp_selector == 0b001){
-        PORTD = tabla(dig[0]);
-        disp_selector = 0b010;
+    PORTE = disp_selector;                  // PORTE = 0b001
+    if(disp_selector == 0b001){             // Si disp_selector = 0b001
+        PORTD = tabla(dig[0]);              // PORTD = valor traducido de posición 0 de array dig[]
+        disp_selector = 0b010;              // disp_selector = 0b010
     }
-    else if(disp_selector == 0b010){
-        PORTD = tabla(dig[1]);
-        disp_selector = 0b100;
+    else if(disp_selector == 0b010){        // Si disp_selector = 0b010
+        PORTD = tabla(dig[1]);              // PORTD = valor traducido de posición 1 de array dig[]
+        disp_selector = 0b100;              // disp_selector = 0b100
     }
-    else if(disp_selector == 0b100){
-        PORTD = tabla_p(dig[2]);
-        disp_selector = 0b001;
+    else if(disp_selector == 0b100){        // Si disp_selector = 0b100
+        PORTD = tabla_p(dig[2]);            // PORTD = valor traducido de posición 2 de array dig[]
+        disp_selector = 0b001;              // disp_selector = 0b001
     }
 }
 
 int tabla(int a){
-    switch (a){
-        case 0:
-            return 0b00111111;
+    switch (a){                             // Ingresar valor de "a" a switch case
+        case 0:                             // Si a = 0
+            return 0b00111111;              // devolver valor 0b00111111
             break;
-        case 1:
-            return 0b00000110;
+        case 1:                             // Si a = 1
+            return 0b00000110;              // devolver valor 0b00000110 
             break;
-        case 2:
-            return 0b01011011;
+        case 2:                             // Si a = 2
+            return 0b01011011;              // devolver valor 0b01011011
             break;
-        case 3:
-            return 0b01001111;
+        case 3:                             // Si a = 3
+            return 0b01001111;              // devolver valor 0b01001111
             break;
-        case 4:
-            return 0b01100110;
+        case 4:                             // Si a = 4
+            return 0b01100110;              // devolver valor 0b01100110
             break;
-        case 5:
-            return 0b01101101;
+        case 5:                             // Si a = 5
+            return 0b01101101;              // devolver valor 0b01101101
             break;
-        case 6:
-            return 0b01111101;
+        case 6:                             // Si a = 6
+            return 0b01111101;              // devolver valor 0b01111101
             break;
-        case 7:
-            return 0b00000111;
+        case 7:                             // Si a = 7
+            return 0b00000111;              // devolver valor 0b01111101
             break;
-        case 8:
-            return 0b01111111;
+        case 8:                             // Si a = 8
+            return 0b01111111;              // devolver valor 0b01111111
             break;
-        case 9:
-            return 0b01101111;
+        case 9:                             // Si a = 9
+            return 0b01101111;              // devolver valor 0b01101111
             break;
-        case 10:
-            return 0b01111011;
         default:
             break;
             
@@ -215,39 +213,37 @@ int tabla(int a){
 }
  
 int tabla_p(int a){
-    switch (a){
-        case 0:
-            return 0b10111111;
+    switch (a){                             // Ingresar valor de "a" a switch case
+        case 0:                             // Si a = 0
+            return 0b10111111;              // devolver valor 0b10111111
             break;
-        case 1:
-            return 0b10000110;
+        case 1:                             // Si a = 1
+            return 0b10000110;              // devolver valor 0b10000110 
             break;
-        case 2:
-            return 0b11011011;
+        case 2:                             // Si a = 2
+            return 0b11011011;              // devolver valor 0b11011011
             break;
-        case 3:
-            return 0b11001111;
+        case 3:                             // Si a = 3
+            return 0b11001111;              // devolver valor 0b11001111
             break;
-        case 4:
-            return 0b11100110;
+        case 4:                             // Si a = 4
+            return 0b11100110;              // devolver valor 0b11100110
             break;
-        case 5:
-            return 0b11101101;
+        case 5:                             // Si a = 5
+            return 0b11101101;              // devolver valor 0b11101101
             break;
-        case 6:
-            return 0b11111101;
+        case 6:                             // Si a = 6
+            return 0b11111101;              // devolver valor 0b11111101
             break;
-        case 7:
-            return 0b10000111;
+        case 7:                             // Si a = 7
+            return 0b10000111;              // devolver valor 0b11111101
             break;
-        case 8:
-            return 0b11111111;
+        case 8:                             // Si a = 8
+            return 0b11111111;              // devolver valor 0b11111111
             break;
-        case 9:
-            return 0b11101111;
+        case 9:                             // Si a = 9
+            return 0b11101111;              // devolver valor 0b11101111
             break;
-        case 10:
-            return 0b11111011;
         default:
             break;
             
