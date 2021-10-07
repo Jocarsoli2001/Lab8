@@ -726,39 +726,39 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U _divisor ]
 [f ]
 "157
-[; ;LAB8.c: 157:     PORTD = cont_vol;
-[e = _PORTD -> _cont_vol `uc ]
-"158
-[; ;LAB8.c: 158:     for(int i = 2; i >= 4; i--){
+[; ;LAB8.c: 157:     for(int i = 0; i<3 ; i++){
 {
 [v _i `i ~T0 @X0 1 a ]
-[e = _i -> 2 `i ]
-[e $ >= _i -> 4 `i 154  ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 3 `i 154  ]
 [e $U 155  ]
 [e :U 154 ]
 {
-"159
-[; ;LAB8.c: 159:         dig[ i ] = cont_vol % 10;
+"158
+[; ;LAB8.c: 158:         dig[i] = cont_vol % 10;
 [e = *U + &U _dig * -> -> _i `ui `ux -> -> # *U &U _dig `ui `ux % _cont_vol -> 10 `i ]
+"159
+[; ;LAB8.c: 159:         cont_vol = (cont_vol - dig[i])/10;
+[e = _cont_vol / - _cont_vol *U + &U _dig * -> -> _i `ui `ux -> -> # *U &U _dig `ui `ux -> 10 `i ]
 "160
-[; ;LAB8.c: 160:         cont_vol /= 10;
-[e =/ _cont_vol -> 10 `i ]
-"161
-[; ;LAB8.c: 161:     }
+[; ;LAB8.c: 160:     }
 }
-[e -- _i -> 1 `i ]
-[e $ >= _i -> 4 `i 154  ]
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 3 `i 154  ]
 [e :U 155 ]
 }
-"162
-[; ;LAB8.c: 162:     dig[0] = uni;
+"161
+[; ;LAB8.c: 161:     dig[0] = uni;
 [e = *U + &U _dig * -> -> -> 0 `i `ui `ux -> -> # *U &U _dig `ui `ux _uni ]
-"163
-[; ;LAB8.c: 163:     dig[1] = dece;
+"162
+[; ;LAB8.c: 162:     dig[1] = dece;
 [e = *U + &U _dig * -> -> -> 1 `i `ui `ux -> -> # *U &U _dig `ui `ux _dece ]
-"164
-[; ;LAB8.c: 164:     dig[2] = cen;
+"163
+[; ;LAB8.c: 163:     dig[2] = cen;
 [e = *U + &U _dig * -> -> -> 2 `i `ui `ux -> -> # *U &U _dig `ui `ux _cen ]
+"164
+[; ;LAB8.c: 164:     return;
+[e $UE 153  ]
 "165
 [; ;LAB8.c: 165: }
 [e :UE 153 ]

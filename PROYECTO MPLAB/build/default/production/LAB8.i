@@ -2858,14 +2858,14 @@ void tmr0(void){
 }
 
 void divisor(void){
-    PORTD = cont_vol;
-    for(int i = 2; i >= 4; i--){
-        dig[ i ] = cont_vol % 10;
-        cont_vol /= 10;
+    for(int i = 0; i<3 ; i++){
+        dig[i] = cont_vol % 10;
+        cont_vol = (cont_vol - dig[i])/10;
     }
     dig[0] = uni;
     dig[1] = dece;
     dig[2] = cen;
+    return;
 }
 
 void displays(void){
