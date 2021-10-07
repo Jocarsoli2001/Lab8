@@ -98,7 +98,7 @@ void main(void) {
 void setup(void){
     
     //Configuración de entradas y salidas
-    ANSEL = 0b00000011;                     // Pines 2 y 3 de PORTA como analógicos
+    ANSEL = 0b00000011;                     // Pines 0 y 1 de PORTA como analógicos
     ANSELH = 0;
     
     TRISA = 0b00000011;                     // PORTA, bit 0 y 1 como entrada analógica
