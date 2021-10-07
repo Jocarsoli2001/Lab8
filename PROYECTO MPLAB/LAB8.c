@@ -37,61 +37,59 @@
 #define _XTAL_FREQ 4000000
 
 //-----------------------Constantes----------------------------------
-#define  valor_tmr0 237              // valor_tmr0 = 61
-#define  prueba 123
+#define  valor_tmr0 237                     // valor_tmr0 = 237
 
 //-----------------------Variables------------------------------------
 int cont2 = 0;
 int cont_vol = 0;
-int digi = 0;
-int uni = 0;
-int dece = 0;
-int cen = 0;
+uint8_t digi = 0;
 uint8_t  disp_selector = 0b001;
 int dig[3];
 
 //------------Funciones sin retorno de variables----------------------
-void setup(void);                   // Función de setup
-void divisor(void);
-void tmr0(void);                    // Función para reiniciar TMR0
-void displays(void);
+void setup(void);                           // Función de setup
+void divisor(void);                         // Función para dividir números en dígitos
+void tmr0(void);                            // Función para reiniciar TMR0
+void displays(void);                        // Función para alternar valores mostrados en displays
 
 //-------------Funciones que retornan variables-----------------------
-int  tabla(int a);
+int  tabla(int a);                          // Tabla para traducir valores a displays de 7 segmentos
+int  tabla_p(int a);                        // Tabla que traduce valores a displays de 7 segmentos pero con punto decimal incluido
 
 //----------------------Interrupciones--------------------------------
 void __interrupt() isr(void){
     if(PIR1bits.ADIF){
-        if(ADCON0bits.CHS == 1){
-            cont2 = ADRESH;
-            cont_vol = cont2*2;
+        if(ADCON0bits.CHS == 1){            // Si el channel es 1 (puerto AN1)
+            cont_vol = 2*ADRESH;            // Valor analógico traducido = cont_vol
+            divisor();                      // Llamar subrutina de divisor
         }
         else{
-            PORTC = ADRESH;
-        }
-        PIR1bits.ADIF = 0;
-        divisor();
+            PORTC = ADRESH;                 // Si channel select = 0
+        }                                   //   entonces asignar PORTC = ADRESH
+        PIR1bits.ADIF = 0;                  // Limpiar bander de interrupción ADC
     }
     if(T0IF){
-        tmr0();
+        tmr0();                             // Mostrar displays en interrupción de Timer 0
         displays();
     }
 }
 
 //----------------------Main Loop--------------------------------
 void main(void) {
-    setup();                        // Subrutina de setup
-    ADCON0bits.GO = 1;
+    setup();                                // Subrutina de setup
+    ADCON0bits.GO = 1;                      // Comenzar conversión ADC 
     while(1){
-        if(ADCON0bits.GO == 0){
-            if(ADCON0bits.CHS == 1){
-                ADCON0bits.CHS = 0;
+        if(ADCON0bits.GO == 0){             // Si bit GO = 0
+            if(ADCON0bits.CHS == 1){        // Si Channel Select = 1
+                ADCON0bits.CHS = 0;         // Asignar Channel Select como 0
+                __delay_us(50);             // Delay de 50 ms
             }
-            else{
-                ADCON0bits.CHS = 1;
+            else{                           // Si Channel Select = 0
+                ADCON0bits.CHS = 1;         // Asignar Channel Select como 1
+                __delay_us(50);
             }
             __delay_us(50);
-            ADCON0bits.GO = 1;
+            ADCON0bits.GO = 1;              // Asignar bit GO = 1
         } 
     }
 }
@@ -158,28 +156,24 @@ void divisor(void){
         dig[i] = cont_vol % 10;
         cont_vol = (cont_vol - dig[i])/10;
     }
-    dig[0] = uni;
-    dig[1] = dece;
-    dig[2] = cen;
-    return;
 }
 
 void displays(void){
     PORTE = disp_selector;
     if(disp_selector == 0b001){
-        PORTD = tabla(uni);
+        PORTD = tabla(dig[0]);
         disp_selector = 0b010;
     }
     else if(disp_selector == 0b010){
-        PORTD = tabla(dece);
+        PORTD = tabla(dig[1]);
         disp_selector = 0b100;
     }
     else if(disp_selector == 0b100){
-        PORTD = tabla(cen);
+        PORTD = tabla_p(dig[2]);
         disp_selector = 0b001;
     }
 }
- 
+
 int tabla(int a){
     switch (a){
         case 0:
@@ -214,6 +208,46 @@ int tabla(int a){
             break;
         case 10:
             return 0b01111011;
+        default:
+            break;
+            
+    }
+}
+ 
+int tabla_p(int a){
+    switch (a){
+        case 0:
+            return 0b10111111;
+            break;
+        case 1:
+            return 0b10000110;
+            break;
+        case 2:
+            return 0b11011011;
+            break;
+        case 3:
+            return 0b11001111;
+            break;
+        case 4:
+            return 0b11100110;
+            break;
+        case 5:
+            return 0b11101101;
+            break;
+        case 6:
+            return 0b11111101;
+            break;
+        case 7:
+            return 0b10000111;
+            break;
+        case 8:
+            return 0b11111111;
+            break;
+        case 9:
+            return 0b11101111;
+            break;
+        case 10:
+            return 0b11111011;
         default:
             break;
             

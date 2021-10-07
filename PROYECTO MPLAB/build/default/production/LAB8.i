@@ -2744,13 +2744,10 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 # 34 "LAB8.c" 2
-# 44 "LAB8.c"
+# 43 "LAB8.c"
 int cont2 = 0;
 int cont_vol = 0;
-int digi = 0;
-int uni = 0;
-int dece = 0;
-int cen = 0;
+uint8_t digi = 0;
 uint8_t disp_selector = 0b001;
 int dig[3];
 
@@ -2762,19 +2759,19 @@ void displays(void);
 
 
 int tabla(int a);
+int tabla_p(int a);
 
 
 void __attribute__((picinterrupt(("")))) isr(void){
     if(PIR1bits.ADIF){
         if(ADCON0bits.CHS == 1){
-            cont2 = ADRESH;
-            cont_vol = cont2*2;
+            cont_vol = 2*ADRESH;
+            divisor();
         }
         else{
             PORTC = ADRESH;
         }
         PIR1bits.ADIF = 0;
-        divisor();
     }
     if(T0IF){
         tmr0();
@@ -2790,9 +2787,11 @@ void main(void) {
         if(ADCON0bits.GO == 0){
             if(ADCON0bits.CHS == 1){
                 ADCON0bits.CHS = 0;
+                _delay((unsigned long)((50)*(4000000/4000000.0)));
             }
             else{
                 ADCON0bits.CHS = 1;
+                _delay((unsigned long)((50)*(4000000/4000000.0)));
             }
             _delay((unsigned long)((50)*(4000000/4000000.0)));
             ADCON0bits.GO = 1;
@@ -2862,24 +2861,20 @@ void divisor(void){
         dig[i] = cont_vol % 10;
         cont_vol = (cont_vol - dig[i])/10;
     }
-    dig[0] = uni;
-    dig[1] = dece;
-    dig[2] = cen;
-    return;
 }
 
 void displays(void){
     PORTE = disp_selector;
     if(disp_selector == 0b001){
-        PORTD = tabla(uni);
+        PORTD = tabla(dig[0]);
         disp_selector = 0b010;
     }
     else if(disp_selector == 0b010){
-        PORTD = tabla(dece);
+        PORTD = tabla(dig[1]);
         disp_selector = 0b100;
     }
     else if(disp_selector == 0b100){
-        PORTD = tabla(cen);
+        PORTD = tabla_p(dig[2]);
         disp_selector = 0b001;
     }
 }
@@ -2918,6 +2913,46 @@ int tabla(int a){
             break;
         case 10:
             return 0b01111011;
+        default:
+            break;
+
+    }
+}
+
+int tabla_p(int a){
+    switch (a){
+        case 0:
+            return 0b10111111;
+            break;
+        case 1:
+            return 0b10000110;
+            break;
+        case 2:
+            return 0b11011011;
+            break;
+        case 3:
+            return 0b11001111;
+            break;
+        case 4:
+            return 0b11100110;
+            break;
+        case 5:
+            return 0b11101101;
+            break;
+        case 6:
+            return 0b11111101;
+            break;
+        case 7:
+            return 0b10000111;
+            break;
+        case 8:
+            return 0b11111111;
+            break;
+        case 9:
+            return 0b11101111;
+            break;
+        case 10:
+            return 0b11111011;
         default:
             break;
 
